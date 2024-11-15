@@ -1,5 +1,29 @@
+//Jesús Osvaldo Ramos Pérez A01713833
+
 #include<iostream>
 using namespace std;
+class instrument {
+    private:
+    string marca;
+    int precio;
+    public:
+    instrument(string _marca, int _precio): marca(_marca), precio(_precio)  {}
+    string getMarca() const{
+        return marca;
+    }
+    int getPrecio () const{
+        return precio;
+    }
+    void setPrecio(int _precio){
+
+        if (_precio > 0) {
+             precio=_precio;
+             }
+
+    }
+    virtual void info() const=0;
+    
+};
 class cymbals {
     public:
     string marca;
