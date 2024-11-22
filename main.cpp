@@ -2,102 +2,113 @@
 
 #include<iostream>
 using namespace std;
+
 class instrument {
     private:
-    string marca;
-    int precio;
+        string marca;
+        int precio;
+    
     public:
-    instrument(string _marca, int _precio): marca(_marca), precio(_precio)  {}
-    string getMarca() const{
-        return marca;
-    }
-    int getPrecio () const{
-        return precio;
-    }
-    void setPrecio(int _precio){
+        instrument(string _marca, int _precio): marca(_marca), precio(_precio) {}
+        
+        string getMarca() const {
+            return marca;
+        }
 
-        if (_precio > 0) {
-             precio=_precio;
-             }
+        int getPrecio() const {
+            return precio;
+        }
 
-    }
-    virtual void info() const=0;
-    
+        void setPrecio(int _precio) {
+            if (_precio > 0) {
+                precio = _precio;
+            }
+        }
+
+        virtual void info() const = 0;
 };
-class cymbals {
+
+class cymbals : public instrument {
+    private:
+        string tipo;
+        string gama;
+
     public:
-    string marca;
-    string tipo;
-    string gama;
-    int precio;
-   
-    
-    cymbals(string _marca, string _tipo, string _gama, int _precio){
-        marca=_marca;
-        tipo=_tipo;
-        gama=_gama;
-        precio=_precio;
-    }
-    void info(){
-        cout<< "La marca es " << marca  <<"\n";
-        cout<< "El tipo es " << tipo  <<"\n";
-        cout<< "La gama es " << gama  <<"\n";
-        cout<< "El precio es " << precio  <<"\n";
-    }
-};
-    
-class drumheads {
-    public:
-    string marca;
-    string genero;
-    string durabilidad;
-    int precio;
-    
-    
-    drumheads(string _marca, string _genero, string _durabilidad, int _precio){
-        marca=_marca;
-        genero=_genero;
-        durabilidad=_durabilidad;
-        precio=_precio;
-    }
-    void info(){
-        cout<< "La marca es " << marca  <<"\n";
-        cout<< "El genero es " << genero  <<"\n";
-        cout<< "La durabilidad es " << durabilidad  <<"\n";
-        cout<< "El precio es " << precio  <<"\n";
-    }
-};
-class drums {
-    public:
-    string marca;
-    string gama;
-    string madera;
-    int precio;
-    
-    
-    drums(string _marca, string _gama, string _madera, int _precio){
-        marca=_marca;
-        gama=_gama;
-        madera=_madera;
-        precio=_precio;
-    }
-    void info(){
-        cout<< "La marca es " << marca  <<"\n";
-        cout<< "La gama es " << gama  <<"\n";
-        cout<< "La madera es " << madera  <<"\n";
-        cout<< "El precio es " << precio  <<"\n";
-    }
-};
-int main()
-{
-    cymbals c1("zildjian","crash","alta",7000);
-    c1.info();
+        cymbals(string _marca, string _tipo, string _gama, int _precio) : instrument(_marca, _precio), tipo(_tipo), gama(_gama) {}
 
-    drumheads c2("evans","rock","alta",500);
-    c2.info();
+        void info() const override {
+            cout << "La marca de cymbals es " << getMarca() << "\n";
+            cout << "El tipo de cymbals es " << tipo << "\n";
+            cout << "La gama de cymbals es " << gama << "\n";
+            cout << "El precio de cymbals es " << getPrecio() << "\n";
+        }
+};
+class drums : public instrument {
+    private:
+        string gama;
+        string madera;
 
-    drums c3("tama","alta","maple",50000);
-    c3.info();
+    public:
+        drums(string _marca, string _madera, string _gama, int _precio) : instrument(_marca, _precio), madera(_madera), gama(_gama) {}
+
+        void info() const override {
+            cout << "La marca de los drums es " << getMarca() << "\n";
+            cout << "La gama de los drums es " << gama << "\n";
+            cout << "La madera de los drums es " << madera << "\n";
+            cout << "El precio de los drums es " << getPrecio() << "\n";
+        }
+};
+class drumheads : public instrument {
+    private:
+        string genero;
+        string durabilidad;
+
+    public:
+        drumheads(string _marca, string _genero, string _durabilidad, int _precio) : instrument(_marca, _precio), genero(_genero), durabilidad(_durabilidad) {}
+
+        void info() const override {
+            cout << "La marca de los drumheads es " << getMarca() << "\n";
+            cout << "El genero de los drumheads es " << genero << "\n";
+            cout << "La durabilidad de los drumheads es " << durabilidad << "\n";
+            cout << "El precio de los drumheads es " << getPrecio() << "\n";
+        }
+};
+
+
+
+class drumset {
+    private:
+        instrument* piezas[7];
+        int contador;
+
+    public:
+        drumset() : contador(0) {}
+
+        void agregarpieza(instrument* pieza) {
+            if (contador < 7) {
+                piezas[contador++] = pieza;
+                cout << "Pieza agregada: " << pieza->getMarca() << "\n";
+            } else {
+                cout << "No se pueden agregar más piezas\n";
+            }
+        }
+
+        void mostrarbateria() {
+            cout << "Tu bateria tiene:\n";
+            for (int i = 0; i < contador; ++i) {
+                piezas[i]->info();
+            }
+        }
+};
+
+int main() {
+    drumset mibateria;
+
+    mibateria.agregarpieza(new cymbals("Zildjian", "Crash", "Alta", 7000));
+    mibateria.agregarpieza(new drumheads("Evans", "Rock", "Alta", 500));
+    mibateria.agregarpieza(new drums("Tama", "Maple", "Alta", 50000));
+
+    mibateria.mostrarbateria();
 
     return 0;
 }
