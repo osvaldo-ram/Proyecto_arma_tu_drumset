@@ -1,114 +1,71 @@
 //Jesús Osvaldo Ramos Pérez A01713833
 
 #include<iostream>
+#include "Cymbals.h"
+#include "Drumheads.h"
+#include "Drums.h"
+#include "Drumset.h"
+
 using namespace std;
 
-class instrument {
-    private:
-        string marca;
-        int precio;
-    
-    public:
-        instrument(string _marca, int _precio): marca(_marca), precio(_precio) {}
-        
-        string getMarca() const {
-            return marca;
-        }
-
-        int getPrecio() const {
-            return precio;
-        }
-
-        void setPrecio(int _precio) {
-            if (_precio > 0) {
-                precio = _precio;
-            }
-        }
-
-        virtual void info() const = 0;
-};
-
-class cymbals : public instrument {
-    private:
-        string tipo;
-        string gama;
-
-    public:
-        cymbals(string _marca, string _tipo, string _gama, int _precio) : instrument(_marca, _precio), tipo(_tipo), gama(_gama) {}
-
-        void info() const override {
-            cout << "La marca de cymbals es " << getMarca() << "\n";
-            cout << "El tipo de cymbals es " << tipo << "\n";
-            cout << "La gama de cymbals es " << gama << "\n";
-            cout << "El precio de cymbals es " << getPrecio() << "\n";
-        }
-};
-class drums : public instrument {
-    private:
-        string gama;
-        string madera;
-
-    public:
-        drums(string _marca, string _madera, string _gama, int _precio) : instrument(_marca, _precio), madera(_madera), gama(_gama) {}
-
-        void info() const override {
-            cout << "La marca de los drums es " << getMarca() << "\n";
-            cout << "La gama de los drums es " << gama << "\n";
-            cout << "La madera de los drums es " << madera << "\n";
-            cout << "El precio de los drums es " << getPrecio() << "\n";
-        }
-};
-class drumheads : public instrument {
-    private:
-        string genero;
-        string durabilidad;
-
-    public:
-        drumheads(string _marca, string _genero, string _durabilidad, int _precio) : instrument(_marca, _precio), genero(_genero), durabilidad(_durabilidad) {}
-
-        void info() const override {
-            cout << "La marca de los drumheads es " << getMarca() << "\n";
-            cout << "El genero de los drumheads es " << genero << "\n";
-            cout << "La durabilidad de los drumheads es " << durabilidad << "\n";
-            cout << "El precio de los drumheads es " << getPrecio() << "\n";
-        }
-};
-
-
-
-class drumset {
-    private:
-        instrument* piezas[7];
-        int contador;
-
-    public:
-        drumset() : contador(0) {}
-
-        void agregarpieza(instrument* pieza) {
-            if (contador < 7) {
-                piezas[contador++] = pieza;
-                cout << "Pieza agregada: " << pieza->getMarca() << "\n";
-            } else {
-                cout << "No se pueden agregar más piezas\n";
-            }
-        }
-
-        void mostrarbateria() {
-            cout << "Tu bateria tiene:\n";
-            for (int i = 0; i < contador; ++i) {
-                piezas[i]->info();
-            }
-        }
-};
 
 int main() {
     drumset mibateria;
-
-    mibateria.agregarpieza(new cymbals("Zildjian", "Crash", "Alta", 7000));
-    mibateria.agregarpieza(new drumheads("Evans", "Rock", "Alta", 500));
-    mibateria.agregarpieza(new drums("Tama", "Maple", "Alta", 50000));
-
-    mibateria.mostrarbateria();
-
-    return 0;
+    int opciones;
+    string marca,set,gama,madera,genero,durabilidad;
+    int precio=0;
+    while (true){
+        cout<<"Bienvenido al armador de bateria, con que quieres iniciar? \n 1.Cymbals \n 2.Drumheads \n 3.Drums \n 4.Mostrar bateria \n 5.Salir"<<"\n";
+        cin>>opciones;
+        switch(opciones){
+            case 1:
+                cout<<"Elige tu marca de cymbals   \n";
+                cout<<" Paiste \n Zildjian \n Meinl \n Sabian \n Owl \n ";
+                cin>> marca;
+                cout<<"Elige tu set de cymbals \n";
+                cout<<" Bright \n Dark \n Hybrid \n";
+                cin>>set;
+                cout<<"Elige tu gama de cymbals \n";
+                cout<<" Alta \n Media \n Baja \n";
+                cin>> gama;
+                mibateria.agregarpieza(new cymbals(marca,set,gama, precio));
+                break;
+            case 2:
+                cout<<"Elige set de drumheads de tu marca favorita \n";
+                cout<<" Evans \n Remo \n Aquarian \n  ";
+                cin>> marca;
+                cout<<"Elige tu genero de drumheads \n";
+                cout<<" Rock \n Jazz \n Pop \n Metal \n ";
+                cin>> genero;
+                 cout<<"Elige tu gama de tus drumheads \n";
+                cout<<" Alta \n Media \n Baja \n";
+                cin>> gama;
+                cout<<"Elige la durabilidad de tus drumheads \n";
+                cout<<" Alta \n Media \n Baja \n";
+                cin>> durabilidad;
+                mibateria.agregarpieza(new drumheads(marca,gama,genero, durabilidad, precio ));
+                break;
+            case 3:
+                cout<<"Elige tus drums de tu marca favorita \n";
+                cout<<" Tama \n Pearl \n Mapex \n Ludwig \n ";
+                cin>>marca;
+                cout<<"Elige la madera de tus drums \n";
+                cout<<" Maple \n Cherry \n Caoba \n";
+                cin>>madera;
+                cout<<"Elige tu gama de drums \n";
+                cout<<" Alta \n Media \n Bajo \n";
+                mibateria.agregarpieza(new drums(marca, madera, gama , precio));
+                break;
+            case 4:
+                cout<<"Tu drum set es \n";
+                mibateria.mostrarbateria();
+                break;
+            case 5:
+                cout<<"Adios...";
+                return 0;
+            default:
+                cout<<"opcion no valida. Intente nuevamente \n";
+                break;
+        }
+    }   
 }
