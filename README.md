@@ -15,3 +15,5 @@ También puede ser ajustado no solo a batrerías, puede usarse con otros instrum
 El código no sirve fuera de conceptos de batería, por lo mismo, si se quisiera utilizar en otro ambito ya sea instrumental o cualquier otro, tendrá que ser adaptado a esas necesidades.
 
 El programa se usa ingresando como primer paso un numero de los que muestra al inicio en las opciones, las opciones son las partes con las que puedes iniciar a armar tu drumset, después eliges el nombre de la marca de tu interés, la caracteristica de tu artículo y la gama. Después de elegir el artículo te devuelve al inicio y puedes elegir otro artículo con un máximo de 7, o puedes hacer que el programa te muestre las piezas u objetos que elegiste, despliega la información que elegiste de dicho objeto y también te muestra su precio.
+
+NOTA: Al elegir la marca y las caracteristicas de tu artículo deberás ponerlo excatamente como está escrito con la primera letra mayúscula y sin datos especiales.
